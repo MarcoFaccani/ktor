@@ -1,5 +1,6 @@
 package com.marcofaccani.plugins
 
+import com.marcofaccani.service.CurrencyService
 import com.marcofaccani.service.InboundValidator
 import io.ktor.http.*
 import io.ktor.server.routing.*
@@ -10,6 +11,7 @@ import org.koin.ktor.ext.inject
 fun Application.configureRouting() {
 
   val inboundValidator by inject<InboundValidator>()
+  val currencyService by inject<CurrencyService>()
 
   routing {
 
@@ -26,7 +28,8 @@ fun Application.configureRouting() {
         val to = inboundValidator.getRequiredParameter(call, "to")
         val amount = inboundValidator.getRequiredParameter(call, "amount")
 
-        return@get call.respondText("Success", status = HttpStatusCode.OK)
+        val response = currencyService.convertCurrency(from, to, amount)
+        return@get call.respondText(response, status = HttpStatusCode.OK, contentType = ContentType.Application.Json)
       }
     }
   }

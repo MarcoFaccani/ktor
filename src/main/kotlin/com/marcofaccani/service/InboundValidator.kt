@@ -6,16 +6,12 @@ import io.ktor.server.response.*
 
 class InboundValidator {
 
-  suspend fun getRequiredParameter(call: ApplicationCall, paramName: String): String? {
+  suspend fun getRequiredParameter(call: ApplicationCall, paramName: String): String {
     val paramValue = call.parameters[paramName]
     if (paramValue.isNullOrEmpty()) {
-      call.respondText(
-        "Missing required parameter: $paramName",
-        status = HttpStatusCode.BadRequest
-      )
-      return null
+      call.respond(status = HttpStatusCode.BadRequest, "Missing required parameter: $paramName")
     }
-    return paramValue
+    return paramValue!!
   }
 
 }
