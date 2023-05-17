@@ -1,4 +1,4 @@
-package com.marcofaccani.service
+package com.marcofaccani.services
 
 import com.marcofaccani.models.GetCurrenciesResponse
 import io.ktor.client.*

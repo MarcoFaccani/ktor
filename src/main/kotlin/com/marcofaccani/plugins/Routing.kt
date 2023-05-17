@@ -1,7 +1,7 @@
 package com.marcofaccani.plugins
 
-import com.marcofaccani.service.CurrencyService
-import com.marcofaccani.service.InboundValidator
+import com.marcofaccani.services.CurrencyService
+import com.marcofaccani.services.InboundValidator
 import io.ktor.http.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*

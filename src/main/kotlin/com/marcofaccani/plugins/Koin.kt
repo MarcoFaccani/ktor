@@ -1,7 +1,7 @@
 package com.marcofaccani.plugins
 
-import com.marcofaccani.service.CurrencyService
-import com.marcofaccani.service.InboundValidator
+import com.marcofaccani.services.CurrencyService
+import com.marcofaccani.services.InboundValidator
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
