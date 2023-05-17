@@ -1,6 +1,7 @@
 package com.marcofaccani.services
 
 import com.marcofaccani.models.GetCurrenciesResponse
+import com.marcofaccani.models.exceptions.ValidationException
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -42,19 +43,11 @@ class CurrencyService {
       val getCurrenciesResponse: GetCurrenciesResponse = response.body()
 
       if (!getCurrenciesResponse.symbols.containsKey(from)) {
+        throw ValidationException("Currency type $from is not valid")
+      }
 
-        /* TODO: I dont have a reference to call object here
-        return@get call.respond(
-          "Currency type $from is not valid",
-          status = HttpStatusCode.BadRequest
-        )
-
-       if (!getCurrenciesResponse.symbols.containsKey(to)) {
-        return@get call.respondText(
-          "Currency type $to is not valid",
-          status = HttpStatusCode.BadRequest
-        )
-        } */
+      if (!getCurrenciesResponse.symbols.containsKey(to)) {
+        throw ValidationException("Currency type $to is not valid")
       }
 
       val httpResponseConvertCurrency = client.get("https://api.apilayer.com/exchangerates_data/convert") {
@@ -69,7 +62,7 @@ class CurrencyService {
         }
       }
 
-      conversionResponse =  httpResponseConvertCurrency.bodyAsText()
+      conversionResponse = httpResponseConvertCurrency.bodyAsText()
     }
     return conversionResponse
   }

@@ -55,6 +55,7 @@ class RoutingTest : StringSpec(), KoinTest {
       testApplication {
         application {
           configureRouting()
+          configureExceptions()
         }
 
         every { inboundValidator.getRequiredParameter(any(), any()) } throws ValidationException("error")
