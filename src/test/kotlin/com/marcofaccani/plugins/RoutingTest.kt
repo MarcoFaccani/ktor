@@ -2,7 +2,6 @@ package com.marcofaccani.plugins
 
 import com.marcofaccani.models.exceptions.ValidationException
 import com.marcofaccani.services.CurrencyService
-import com.marcofaccani.services.InboundValidator
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.server.testing.*
@@ -18,7 +17,6 @@ import org.koin.test.inject
 
 class RoutingTest : StringSpec(), KoinTest {
 
-  private val inboundValidator: InboundValidator by inject()
   private val currencyService: CurrencyService by inject()
 
   init {
@@ -26,7 +24,6 @@ class RoutingTest : StringSpec(), KoinTest {
     // Configure Koin Dependency Injection for Testing
     val testModule = module {
       single { CurrencyService() }
-      single { InboundValidator() }
     }
 
     beforeTest {
@@ -57,8 +54,6 @@ class RoutingTest : StringSpec(), KoinTest {
           configureRouting()
           configureExceptions()
         }
-
-        every { inboundValidator.getRequiredParameter(any(), any()) } throws ValidationException("error")
 
         client.get("/financial/currency:convert").apply {
           status shouldBe HttpStatusCode.BadRequest

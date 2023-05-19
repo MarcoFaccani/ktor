@@ -17,10 +17,8 @@ import kotlinx.serialization.json.Json
 class CurrencyService {
 
   fun convertCurrency(from: String, to: String, amount: String): String {
-
     var conversionResponse: String
-    // CIO Http Client is an async client. If we intend to use it sync, we need a runBlocking block (my intuition)
-    runBlocking {
+    runBlocking { // CIO Http Client is an async client. If we intend to use it sync, we need a runBlocking block (my intuition)
 
       val client = HttpClient(CIO) {
         install(ContentNegotiation) {

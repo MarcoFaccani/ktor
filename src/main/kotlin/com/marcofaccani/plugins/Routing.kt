@@ -1,7 +1,7 @@
 package com.marcofaccani.plugins
 
+import com.marcofaccani.models.exceptions.ValidationException
 import com.marcofaccani.services.CurrencyService
-import com.marcofaccani.services.InboundValidator
 import io.ktor.http.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -10,7 +10,6 @@ import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
 
-  val inboundValidator by inject<InboundValidator>()
   val currencyService by inject<CurrencyService>()
 
   routing {
@@ -24,9 +23,9 @@ fun Application.configureRouting() {
     route("/financial/currency:convert") {
       get("/{from?}/{to?}/{amount?}") {
 
-        val from = inboundValidator.getRequiredParameter(call, "from")
-        val to = inboundValidator.getRequiredParameter(call, "to")
-        val amount = inboundValidator.getRequiredParameter(call, "amount")
+        val from = call.parameters["from"] ?: throw ValidationException("from is missing")
+        val to = call.parameters["to"] ?: throw ValidationException("to is missing")
+        val amount = call.parameters["amount"] ?: throw ValidationException("amount is missing")
 
         val response = currencyService.convertCurrency(from, to, amount)
         return@get call.respondText(response, status = HttpStatusCode.OK, contentType = ContentType.Application.Json)
