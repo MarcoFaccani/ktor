@@ -32,7 +32,7 @@ class CurrencyService {
       val response: HttpResponse = client.get("https://api.apilayer.com/exchangerates_data/symbols") {
         contentType(ContentType.Application.Json)
         headers {
-          append("apikey", "6Qi5cX2HdNlJZ6da39RB49B0LyaUb0Q7")
+          append("apikey", "") // insert here API KEY
         }
         // if we required to send a body for POST or such, we could have used setBody(Customer(3, "Jet", "Brains"))
       }
@@ -56,7 +56,7 @@ class CurrencyService {
           parameters.append("amount", amount)
         }
         headers {
-          append("apikey", "6Qi5cX2HdNlJZ6da39RB49B0LyaUb0Q7")
+          append("apikey", "") // insert here API KEY
         }
       }
 
