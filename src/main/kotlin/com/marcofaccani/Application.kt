@@ -13,4 +13,6 @@ fun main() {
 fun Application.module() {
   configureSerialization()
   configureRouting()
+  configureKoin()
+  configureExceptions()
 }
