@@ -23,9 +23,9 @@ fun Application.configureRouting() {
     route("/financial/currency:convert") {
       get("/{from?}/{to?}/{amount?}") {
 
-        val from = call.parameters["from"] ?: throw ValidationException("from is missing")
-        val to = call.parameters["to"] ?: throw ValidationException("to is missing")
-        val amount = call.parameters["amount"] ?: throw ValidationException("amount is missing")
+        val from = call.parameters["from"] ?: throw ValidationException("parameter 'from' is missing")
+        val to = call.parameters["to"] ?: throw ValidationException("parameter 'to' is missing")
+        val amount = call.parameters["amount"] ?: throw ValidationException("parameter 'amount' is missing")
 
         val response = currencyService.convertCurrency(from, to, amount)
         return@get call.respondText(response, status = HttpStatusCode.OK, contentType = ContentType.Application.Json)
